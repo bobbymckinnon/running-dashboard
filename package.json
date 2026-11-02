@@ -1,0 +1,39 @@
+{
+  "name": "running-dashboard",
+  "version": "0.1.0",
+  "description": "Running Dashboard plugin for Obsidian",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit --skipLibCheck && node esbuild.config.mjs production",
+    "typecheck": "tsc --noEmit --skipLibCheck",
+    "lint": "eslint src",
+    "preview": "node scripts/preview.mjs"
+  },
+  "keywords": [
+    "obsidian",
+    "running",
+    "strava",
+    "gpx",
+    "fit"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.0.0",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.39.5",
+    "eslint-plugin-obsidianmd": "^0.4.2",
+    "globals": "^17.14.0",
+    "obsidian": "^1.14.4",
+    "playwright": "^1.64.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.72.1"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2"
+  }
+}

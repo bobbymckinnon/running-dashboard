@@ -1,0 +1,146 @@
+/* Running Dashboard: all rules are scoped to .rd-view so nothing leaks into the rest of Obsidian. */
+.rd-view {
+  --rd-accent: #fc5200;
+  --rd-accent-soft: rgba(252, 82, 0, 0.12);
+  --rd-card: var(--background-primary);
+  --rd-bg: var(--background-secondary);
+  --rd-border: var(--background-modifier-border);
+  --rd-text: var(--text-normal);
+  --rd-muted: var(--text-muted);
+  --rd-ok: #2e9e5b;
+  --rd-warn: #e0a100;
+  background: var(--rd-bg);
+  color: var(--rd-text);
+  padding: 24px clamp(12px, 3vw, 36px) 48px;
+}
+.rd-view .rd-root { max-width: 1100px; margin: 0 auto; }
+
+.rd-view .rd-hero { border-left: 5px solid var(--rd-accent); padding: 6px 0 6px 16px; margin: 4px 0 18px; }
+.rd-view .rd-title { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+.rd-view .rd-sub { color: var(--rd-muted); font-size: 15px; margin-top: 6px; }
+.rd-view .rd-sub b { color: var(--rd-accent); }
+
+.rd-view .rd-h2 {
+  font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--rd-muted); margin: 32px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rd-border);
+}
+.rd-view .rd-card, .rd-view .rd-race, .rd-view .rd-coach {
+  background: var(--rd-card); border: 1px solid var(--rd-border); border-radius: 8px; color: var(--rd-text);
+}
+.rd-view .rd-card { padding: 16px 18px; }
+.rd-view .rd-chart { padding: 12px; }
+.rd-view .rd-chart svg { display: block; width: 100%; height: auto; }
+.rd-view .rd-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rd-muted); }
+.rd-view .rd-strong { color: var(--rd-text); font-size: 12px; }
+.rd-view .rd-big { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin: 4px 0 10px; white-space: nowrap; }
+.rd-view .rd-big span { font-size: 15px; font-weight: 600; color: var(--rd-muted); margin-left: 4px; }
+.rd-view .rd-big em { display: block; font-style: normal; font-size: 13px; font-weight: 600; color: var(--rd-muted); letter-spacing: 0; }
+.rd-view .rd-mid { font-size: 22px; font-weight: 800; margin-top: 4px; }
+.rd-view .rd-small { font-size: 12px; color: var(--rd-muted); margin-top: 2px; }
+.rd-view .rd-note { font-size: 13px; color: var(--rd-muted); margin: 8px 0 6px; }
+.rd-view .rd-note a { color: var(--rd-accent); cursor: pointer; }
+
+.rd-view .rd-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.rd-view .rd-row { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.rd-view .rd-row > div, .rd-view .rd-inline > div { display: flex; flex-direction: column; }
+.rd-view .rd-row b { font-size: 15px; font-weight: 700; white-space: nowrap; }
+.rd-view .rd-row span, .rd-view .rd-inline span { font-size: 11px; color: var(--rd-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.rd-view .rd-inline { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 4px 0 12px; }
+.rd-view .rd-inline b { font-size: 20px; font-weight: 800; }
+
+/* coach + readiness */
+.rd-view .rd-coach { border-left: 4px solid var(--rd-accent); padding: 12px 18px; margin-bottom: 14px; }
+.rd-view .rd-coach-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.rd-view .rd-coach-body p { margin: 6px 0; font-size: 14px; line-height: 1.55; }
+.rd-view .rd-readygrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+.rd-view .rd-ready { display: flex; flex-direction: column; gap: 10px; }
+.rd-view .rd-ready-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.rd-view .rd-phase { font-size: 12.5px; color: var(--rd-muted); }
+.rd-view .rd-phase span {
+  display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 10px; background: var(--rd-accent-soft);
+  color: var(--rd-accent); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.rd-view .rd-pred { padding: 10px 0; border-top: 1px solid var(--rd-border); border-bottom: 1px solid var(--rd-border); }
+.rd-view .rd-warntext { color: var(--rd-warn); }
+.rd-view .rd-chk { display: flex; gap: 10px; align-items: flex-start; }
+.rd-view .rd-chk i {
+  flex: none; width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  font-style: normal; font-size: 11px; font-weight: 800; color: #fff; margin-top: 1px;
+}
+.rd-view .rd-chk.ok i { background: var(--rd-ok); }
+.rd-view .rd-chk.warn i { background: var(--rd-warn); }
+.rd-view .rd-chk b { display: block; font-size: 13.5px; }
+.rd-view .rd-chk span { font-size: 11.5px; color: var(--rd-muted); }
+.rd-view .rd-count { text-align: right; }
+.rd-view .rd-count b { display: block; font-size: 24px; font-weight: 800; color: var(--rd-accent); line-height: 1; }
+.rd-view .rd-count span { font-size: 11px; color: var(--rd-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* races */
+.rd-view .rd-races { display: flex; flex-direction: column; gap: 8px; }
+.rd-view .rd-race { display: flex; align-items: center; gap: 16px; padding: 12px 16px; text-decoration: none; }
+.rd-view a.rd-race:hover, .rd-view a.rd-act:hover { border-color: var(--rd-accent); }
+.rd-view .rd-calbadge { width: 52px; flex: none; text-align: center; border: 1px solid var(--rd-border); border-radius: 6px; overflow: hidden; }
+.rd-view .rd-calbadge .m { display: block; background: var(--rd-accent); color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 2px 0; }
+.rd-view .rd-calbadge .d { display: block; font-size: 22px; font-weight: 800; padding: 3px 0; }
+.rd-view .rd-race-info { flex: 1; min-width: 0; }
+.rd-view .rd-race-info .n, .rd-view .rd-act .n { font-weight: 700; font-size: 16px; }
+.rd-view .rd-race-info .s, .rd-view .rd-act .s { font-size: 13px; color: var(--rd-muted); }
+
+/* tables */
+.rd-view table.rd-table { width: 100%; border-collapse: collapse; background: var(--rd-card); border: 1px solid var(--rd-border); border-radius: 8px; overflow: hidden; font-size: 14px; margin-top: 10px; }
+.rd-view .rd-table th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rd-muted); padding: 10px 14px; border-bottom: 1px solid var(--rd-border); background: transparent; }
+.rd-view .rd-table td { padding: 9px 14px; border-bottom: 1px solid var(--rd-border); }
+.rd-view .rd-table tr:last-child td { border-bottom: none; }
+.rd-view .rd-table a { color: var(--rd-accent); font-weight: 600; text-decoration: none; }
+
+.rd-view .rd-hl, .rd-view .rd-shoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.rd-view .rd-shoe .n { font-weight: 700; }
+.rd-view .rd-shoe svg { display: block; width: 100%; height: 6px; margin: 10px 0 6px; }
+.rd-view .rd-shoe .k { font-weight: 700; font-size: 14px; }
+.rd-view .rd-shoe .k span { font-weight: 400; color: var(--rd-muted); font-size: 12px; }
+.rd-view .rd-track { fill: var(--rd-border); }
+.rd-view .rd-fill { fill: var(--rd-accent); }
+.rd-view .rd-warnfill { fill: #d92b2b; }
+
+.rd-view .rd-feed { display: flex; flex-direction: column; gap: 8px; }
+.rd-view .rd-act { display: block; text-decoration: none; }
+.rd-view .rd-act-head { margin-bottom: 10px; }
+.rd-view .rd-tag { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 3px; vertical-align: 2px; background: var(--rd-accent); color: #fff; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.rd-view .rd-act .rd-row b { font-size: 18px; }
+.rd-view .rd-foot { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--rd-border); font-size: 12px; color: var(--rd-muted); }
+.rd-view .rd-empty-state p { margin-top: 0; }
+
+/* charts */
+.rd-view .rd-axis { fill: var(--rd-muted); font-size: 10px; }
+.rd-view .rd-grid { stroke: var(--rd-border); stroke-width: 1; }
+.rd-view .rd-bar { fill: var(--rd-accent); }
+.rd-view .rd-bar-partial { fill-opacity: 0.45; }
+.rd-view .rd-empty { fill: var(--rd-border); }
+.rd-view .rd-l0 { fill: #fdd0a2; }
+.rd-view .rd-l1 { fill: #fdae6b; }
+.rd-view .rd-l2 { fill: #fd8d3c; }
+.rd-view .rd-l3 { fill: #e6550d; }
+.rd-view .rd-l4 { fill: #a63603; }
+.rd-view .rd-racedot { fill: #fff; stroke: #000; stroke-opacity: 0.35; stroke-width: 0.6; }
+
+/* maps: always dark, like a night map, in both themes */
+.rd-view .rd-map { font-size: 11px; }
+.rd-view .rd-sea { fill: #0a0c0f; }
+.rd-view .rd-land { fill: #1c2025; stroke: #3b414a; stroke-width: 0.6; stroke-linejoin: round; }
+.rd-view .rd-land-home { fill: #323a46; stroke: #636d7a; stroke-width: 1; stroke-linejoin: round; }
+.rd-view .rd-land-visited { fill: #5a3322; stroke: #c4501a; stroke-width: 0.6; }
+.rd-view .rd-countryname { fill: #4a525d; font-size: 22px; font-weight: 700; letter-spacing: 4px; }
+.rd-view .rd-route { fill: none; stroke: var(--rd-accent); stroke-opacity: 0.25; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.rd-view .rd-route-race { fill: none; stroke: #ffd2a8; stroke-opacity: 0.9; stroke-width: 1.4; }
+.rd-view .rd-route-small { fill: none; stroke: #ffb27a; stroke-opacity: 0.9; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.rd-view .rd-glow { fill: var(--rd-accent); fill-opacity: 0.18; }
+.rd-view .rd-dot { fill: #fff; }
+.rd-view .rd-racering { fill: none; stroke: var(--rd-accent); stroke-width: 2; }
+.rd-view .rd-racering-outer { fill: none; stroke: var(--rd-accent); stroke-opacity: 0.35; stroke-width: 1.2; stroke-dasharray: 2 2; }
+.rd-view .rd-maplabel { paint-order: stroke; stroke: #0a0c0f; stroke-width: 3px; text-transform: none; letter-spacing: 0; }
+.rd-view .rd-label-title { fill: #f0f0f2; font-weight: 700; font-size: 12px; }
+.rd-view .rd-label-racetitle { fill: #fc8a4d; font-weight: 700; font-size: 12px; }
+.rd-view .rd-label-sub { fill: #b8bcc4; font-size: 10.5px; font-weight: 400; }
+.rd-view .rd-label-race { fill: #fc8a4d; font-weight: 700; font-size: 10.5px; }
+.rd-view .rd-leader { stroke: #8a9099; stroke-width: 0.8; }
+.rd-view .rd-maptext { fill: #8a9099; font-size: 10px; }

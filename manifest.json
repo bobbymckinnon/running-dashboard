@@ -1,0 +1,9 @@
+{
+  "id": "running-dashboard",
+  "name": "Running Dashboard",
+  "version": "0.1.0",
+  "minAppVersion": "1.7.2",
+  "description": "A ready-made running dashboard from your Strava export or GPX/FIT files: totals, training heatmap, charts, route maps, race countdowns and race readiness.",
+  "author": "Bobby McKinnon",
+  "isDesktopOnly": false
+}
