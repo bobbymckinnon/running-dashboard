@@ -183,6 +183,7 @@ export default class RunningDashboardPlugin extends Plugin {
       return;
     }
     this.importing = true;
+    await this.detectStravaExport();
     const notice = new Notice("Running dashboard: importing activities…", 0);
     try {
       this.cache = await runImport(new VaultIO(this), s, this.cache);
@@ -200,6 +201,26 @@ export default class RunningDashboardPlugin extends Plugin {
     } finally {
       this.importing = false;
     }
+  }
+
+  /**
+   * If the configured export folder has no activities.csv, look for one elsewhere in the vault
+   * (people often unzip the archive under a different name) and use it.
+   */
+  private async detectStravaExport(): Promise<void> {
+    const s = this.settings;
+    const io = new VaultIO(this);
+    if (s.stravaExportFolder && (await io.exists(`${s.stravaExportFolder}/activities.csv`))) return;
+    const found = this.app.vault
+      .getFiles()
+      .filter((f) => f.name === "activities.csv" && !f.path.startsWith(this.app.vault.configDir))
+      .sort((a, b) => a.path.length - b.path.length)[0];
+    if (!found) return;
+    const folder = found.parent && !found.parent.isRoot() ? found.parent.path : "";
+    if (!folder || folder === s.stravaExportFolder) return;
+    s.stravaExportFolder = folder;
+    await this.saveSettings();
+    new Notice(`Running dashboard: found your Strava export in "${folder}" and will use it.`);
   }
 
   refreshViews(): void {

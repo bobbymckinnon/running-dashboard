@@ -28,7 +28,12 @@ export function mergeActivities(lists: Activity[][]): Activity[] {
     for (const a of list) {
       const prev = byId.get(a.id);
       if (!prev) byId.set(a.id, a);
-      else byId.set(a.id, { ...prev, ...a, track: a.track || prev.track, gear: a.gear || prev.gear });
+      else {
+        // Same activity from two sources: keep the newest metadata, but prefer the full-resolution track
+        // from a Strava export or watch file over a simplified API polyline.
+        const richTrack = prev.source !== "json" && prev.track ? prev.track : a.source !== "json" && a.track ? a.track : a.track || prev.track;
+        byId.set(a.id, { ...prev, ...a, track: richTrack, gear: a.gear || prev.gear, source: prev.source !== "json" ? prev.source : a.source });
+      }
     }
   }
   const all = [...byId.values()].sort((a, b) => a.start.localeCompare(b.start));
