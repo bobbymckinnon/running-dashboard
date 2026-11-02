@@ -12,20 +12,13 @@ A ready-made running dashboard inside Obsidian. Point it at your running data an
 
 Everything runs locally. The plugin makes **no network requests**.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/overview-dark.png">
-  <img alt="Race readiness cards, coach's note and totals" src="docs/overview-light.png">
-</picture>
+![Heatmap of every run around the runner's home city](https://raw.githubusercontent.com/bobbymckinnon/running-dashboard/main/docs/routes-light.png)
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/training-dark.png">
-  <img alt="Training heatmap and weekly distance chart" src="docs/training-light.png">
-</picture>
+![Race readiness cards, coach's note and totals](https://raw.githubusercontent.com/bobbymckinnon/running-dashboard/main/docs/overview-light.png)
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/country-dark.png">
-  <img alt="Country map with places you have run and upcoming races" src="docs/country-light.png">
-</picture>
+![Training heatmap and weekly distance chart](https://raw.githubusercontent.com/bobbymckinnon/running-dashboard/main/docs/training-light.png)
+
+![Country map with places you have run and upcoming races](https://raw.githubusercontent.com/bobbymckinnon/running-dashboard/main/docs/country-light.png)
 
 <sub>Screenshots use a fictional demo runner in Paris; the routes and races are made up.</sub>
 
