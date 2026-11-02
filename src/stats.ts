@@ -65,15 +65,26 @@ export function buildRuns(acts: Activity[], races: Race[], keywords: string): Ru
     .filter((w) => w.length >= 2 && w.length <= 30)
     .slice(0, 50)
     .map((w) => new RegExp(`(^|[^a-z0-9])${escapeRe(w)}`, "i"));
-  const raceDays = new Set(races.map((r) => r.date));
   const notRace = /(shake ?out|recovery|warm ?up|cool ?down)/i;
-  return acts
-    .filter((a) => RUN_TYPES.has(a.type) && a.distance > 0)
+  const runs = acts.filter((a) => RUN_TYPES.has(a.type) && a.distance > 0);
+  // On a date in the races note, only the run closest to the race distance counts as the race
+  // (so a warm-up jog or a second run that day is not marked as a race).
+  const raceIds = new Set<string>();
+  for (const race of races) {
+    const sameDay = runs.filter((a) => a.start.slice(0, 10) === race.date && a.distance >= 3000);
+    if (!sameDay.length) continue;
+    const km = raceKm(race.distanceText);
+    const pick = sameDay.reduce((best, a) =>
+      km ? (Math.abs(a.distance / 1000 - km) < Math.abs(best.distance / 1000 - km) ? a : best) : a.distance > best.distance ? a : best,
+    );
+    raceIds.add(pick.id);
+  }
+  return runs
     .map((a) => {
       const day = a.start.slice(0, 10);
       const lower = a.name.toLowerCase();
       const byWord = words.some((re) => re.test(lower));
-      const race = (raceDays.has(day) && a.distance >= 3000) || (byWord && !notRace.test(a.name));
+      const race = raceIds.has(a.id) || (byWord && !notRace.test(a.name));
       return { ...a, day, race };
     })
     .sort((a, b) => a.start.localeCompare(b.start));

@@ -68,8 +68,15 @@ async function main() {
   const note = document.createElement("div");
   note.className = "rd-coach-body";
   for (const para of stripTargets(coachMd).split("\n\n").slice(1)) {
+    // The real plugin uses Obsidian's MarkdownRenderer; here **bold** is handled safely with text nodes.
     const p = document.createElement("p");
-    p.textContent = para; // the real plugin uses Obsidian's MarkdownRenderer
+    para.split(/(\*\*[^*]+\*\*)/).forEach((part) => {
+      if (/^\*\*[^*]+\*\*$/.test(part)) {
+        const b = document.createElement("b");
+        b.textContent = part.slice(2, -2);
+        p.appendChild(b);
+      } else p.appendChild(document.createTextNode(part));
+    });
     note.appendChild(p);
   }
   renderDashboard(view, {
@@ -77,7 +84,7 @@ async function main() {
     homeRadiusKm: s.homeRadiusKm, shoeLifeKm: s.shoeLifeKm,
     places: places as Place[], world: world as Country[], countries: countries as Country[],
     importedAt: cache.importedAt, warnings: cache.warnings,
-    coachNote: coachMd ? { el: note, updated: "Mon 2 Nov 2026" } : undefined,
+    coachNote: coachMd ? { el: note, updated: (coachMd.split("\n")[0] || "").replace(/^updated:\s*/i, "") } : undefined,
   });
   window.__RESULT = {
     activities: cache.activities.length,

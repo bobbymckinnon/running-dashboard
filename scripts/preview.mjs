@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import { chromium } from "playwright";
 
-const root = path.resolve("test-data/vault");
+const root = path.resolve(process.env.VAULT || "test-data/vault");
 const files = {};
 const walk = (d) => {
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
